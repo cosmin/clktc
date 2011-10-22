@@ -92,6 +92,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'south',
+    'links',
 )
 
 # See http://docs.djangoproject.com/en/dev/topics/logging
