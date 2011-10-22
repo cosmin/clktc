@@ -3,20 +3,24 @@
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+DEFAULT_FROM_EMAIL='notifications@clk.tc'
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ("Cosmin Stejerean", "cosmin+clktc@offbytwo.com"),
 )
+
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -44,17 +48,10 @@ STATIC_ROOT = ''
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
 )
 
 # List of finder classes that know how to find static files in
@@ -115,3 +112,10 @@ LOGGING = {
         },
     }
 }
+
+# local_settings.py can be used to override environment-specific settings
+# like database and email that differ between development and production.
+try:
+    from local_settings import *
+except ImportError:
+    pass
