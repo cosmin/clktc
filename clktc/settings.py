@@ -1,4 +1,4 @@
-# Django settings for clktc project.
+import os
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
