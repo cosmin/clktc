@@ -4,3 +4,4 @@ dev.db
 # generic stuff
 *.pyc
 *~
+.idea
