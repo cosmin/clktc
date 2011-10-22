@@ -1,0 +1,6 @@
+local_settings.py
+dev.db
+
+# generic stuff
+*.pyc
+*~
