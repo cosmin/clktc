@@ -1,0 +1,14 @@
+# actual dependencies
+django==1.3
+south
+
+# dev related stuff
+ipython
+
+# date related stuff
+python-dateutil
+pytz
+
+# test related stuff
+nose
+django-nose
