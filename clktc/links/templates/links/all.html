@@ -1,0 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>All Links</title>
+</head>
+<body>
+<ul>
+{% for link in links %}
+<li><a href="{{ link.destination_url }}">{{ link.short_url }}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
