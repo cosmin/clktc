@@ -14,10 +14,11 @@ class ViewTests(TestCase):
         link.save()
         response = self.client.get('/links/')
         self.assertIn(link, response.context['links'])
+        self.assertEqual(response.templates[0].name, "links/all.html")
 
     def test_visit_add_link_page(self):
         response = self.client.get('/add/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.templates[0].name, "links/add.html")
 
     def test_add_link(self):
         self.client.post('/add/', dict(destination_url=EXAMPLE_URL, short_url="example"))
