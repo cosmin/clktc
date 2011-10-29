@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST" action="/add/">
+    <div><label for="destination_url"></label><input id="destination_url" name="destination_url" type="text"></div>
+    <div><label for="short_url"></label><input id="short_url" name="short_url" type="text"></div>
+    <div><input type="submit" value="Add Link"/></div>
+    </form>
+{% endblock %}
