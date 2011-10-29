@@ -21,7 +21,8 @@ class ViewTests(TestCase):
         self.assertEqual(response.templates[0].name, "links/add.html")
 
     def test_add_link(self):
-        self.client.post('/add/', dict(destination_url=EXAMPLE_URL, short_url="example"))
+        response = self.client.post('/add/', dict(destination_url=EXAMPLE_URL, short_url="example"))
         link = Link.objects.get(short_url="example")
         self.assertEqual(link.destination_url, EXAMPLE_URL)
+        self.assertRedirects(response, "/links/")
 
