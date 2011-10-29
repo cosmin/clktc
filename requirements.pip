@@ -9,6 +9,3 @@ ipython
 python-dateutil
 pytz
 
-# test related stuff
-nose
-django-nose
