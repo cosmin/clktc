@@ -1,9 +1,9 @@
 from django.contrib.sites.models import Site
-from django.http import HttpRequest
 from django.test.client import Client
 from django.test import TestCase
 from clktc.links.models import Link
-from clktc.links.views import get_all_links
+
+EXAMPLE_URL = "http://example.com"
 
 class ViewTests(TestCase):
     def setUp(self):
@@ -14,4 +14,9 @@ class ViewTests(TestCase):
         link.save()
         response = self.client.get('/links/')
         self.assertIn(link, response.context['links'])
+
+    def test_add_link(self):
+        self.client.post('/add/', dict(destination_url=EXAMPLE_URL, short_url="example"))
+        link = Link.objects.get(short_url="example")
+        self.assertEqual(link.destination_url, EXAMPLE_URL)
 
