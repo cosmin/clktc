@@ -3,6 +3,8 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+INTERNAL_IPS = ["127.0.0.1"]
+
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DEFAULT_FROM_EMAIL='notifications@clk.tc'
 
@@ -81,10 +83,19 @@ MIDDLEWARE_CLASSES = (
     'clktc.links.middleware.RequestSiteMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages"
+)
+
 ROOT_URLCONF = 'clktc.urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'templates'),
+os.path.join(PROJECT_ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -97,10 +108,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     'south',
-    
+
     'bootstrap',
     'links',
-)
+)   
 
 # See http://docs.djangoproject.com/en/dev/topics/logging
 LOGGING = {
