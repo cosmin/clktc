@@ -42,6 +42,10 @@ class AddLinkTest(ViewBaseTest):
         response = self.client.post('/l/add/', {"destination_url" : "", "short_url" : "example"})
         self.assertFormError(response, 'form', 'destination_url', u'This field is required.')
 
+    def test_adding_a_link_without_short_url(self):
+        response = self.client.post('/l/add/', {"destination_url" : EXAMPLE_URL, "short_url" : ""})
+        self.assertFormError(response, 'form', 'short_url', u'This field is required.')
+
 class EditLinkTest(ViewBaseTest):
     def test_edit_link_returns_correct_link_to_edit_template(self):
         link = given_a_link(self.site)
