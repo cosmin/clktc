@@ -1,6 +1,6 @@
 from django.forms.models import ModelForm, ModelFormMetaclass, BaseModelForm
 import os
-from django.template import Context,RequestContext
+from django.template import Context, RequestContext
 from django.template.loader import get_template, select_template
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
@@ -10,15 +10,16 @@ class NoSuchFormField(Exception):
     """""The form field couldn't be resolved."""""
     pass
 
+
 def error_list(errors):
-    return '<ul class="errors"><li>' + \
-           '</li><li>'.join(errors) + \
+    return '<ul class="errors"><li>' +\
+           '</li><li>'.join(errors) +\
            '</li></ul>'
 
-class BootstrapBaseForm(object):
-    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None):
 
-        super(BootstrapBaseForm, self).__init__(data, files, auto_id, prefix, initial)
+class BootstrapBaseForm(object):
+    def __init__(self, *args, **kw):
+        super(BootstrapBaseForm, self).__init__(*args, **kw)
 
         # do we have an explicit layout?
         if hasattr(self, 'Meta') and hasattr(self.Meta, 'layout'):
@@ -65,7 +66,7 @@ class BootstrapBaseForm(object):
         """ Render a list of fields and join the fields by the value in separator. """
 
         output = []
-        
+
         for field in fields:
             if isinstance(field, Fieldset):
                 output.append(field.as_html(self))
@@ -97,9 +98,8 @@ class BootstrapBaseForm(object):
                 self.top_errors.extend(bf.errors)
 
         else:
-
             # Find field + widget type css classes
-            css_class = type(field_instance).__name__ + " " +  type(field_instance.widget).__name__
+            css_class = type(field_instance).__name__ + " " + type(field_instance.widget).__name__
 
             # Add an extra class, Required, if applicable
             if field_instance.required:
@@ -112,30 +112,32 @@ class BootstrapBaseForm(object):
                 help_text = u''
 
             field_hash = {
-                'class' : mark_safe(css_class),
-                'label' : mark_safe(bf.label and bf.label_tag(bf.label) or ''),
-                'help_text' :mark_safe(help_text),
-                'field' : field_instance,
-                'bf' : mark_safe(unicode(bf)),
-                'bf_raw' : bf,
-                'errors' : bf.errors,
-                'field_type' : mark_safe(field.__class__.__name__),
-            }
-            
+                'class': mark_safe(css_class),
+                'label': mark_safe(bf.label and bf.label_tag(bf.label) or ''),
+                'help_text': mark_safe(help_text),
+                'field': field_instance,
+                'bf': mark_safe(unicode(bf)),
+                'bf_raw': bf,
+                'errors': bf.errors,
+                'field_type': mark_safe(field.__class__.__name__),
+                }
+
             if self.custom_fields.has_key(field):
                 template = get_template(self.custom_fields[field])
             else:
                 template = select_template([
                     os.path.join(self.template_base, 'field_%s.html' % field_instance.__class__.__name__.lower()),
                     os.path.join(self.template_base, 'field_default.html'), ])
-                
+
             # Finally render the field
             output = template.render(Context(field_hash))
 
         return mark_safe(output)
 
+
 class BootstrapForm(BootstrapBaseForm, forms.Form):
     pass
+
 
 class Fieldset(object):
     """ Fieldset container. Renders to a <fieldset>. """
@@ -143,9 +145,9 @@ class Fieldset(object):
     def __init__(self, legend, *fields):
         self.legend_html = legend and ('<legend>%s</legend>' % legend) or ''
         self.fields = fields
-    
+
     def as_html(self, form):
-        return u'<fieldset>%s%s</fieldset>' %  (self.legend_html, form.render_fields(self.fields), )
+        return u'<fieldset>%s%s</fieldset>' % (self.legend_html, form.render_fields(self.fields), )
 
 
 class BootstrapModelForm(BootstrapBaseForm, ModelForm):
