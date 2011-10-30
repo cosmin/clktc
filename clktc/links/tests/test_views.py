@@ -55,11 +55,10 @@ class EditLinkTest(ViewBaseTest):
 
     def test_save_on_edit_link_updates_link_with_new_details(self):
         link = given_a_link(self.site)
-        self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
+        self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org/"})
         link = Link.objects.get(pk=link.pk)
-        self.assertEqual(link.destination_url, "http://example.org")
-        self.assertEqual(link.short_url, "example2")
-
+        self.assertEqual(link.destination_url, "http://example.org/")
+    
     def test_save_on_edit_link_redirects_to_all_links(self):
         link = given_a_link(self.site)
         response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
