@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
     <form method="POST" action="/add/">
-    <div><label for="destination_url"></label><input id="destination_url" name="destination_url" type="text"></div>
-    <div><label for="short_url"></label><input id="short_url" name="short_url" type="text"></div>
+    {% csrf_token %}
+    <div><label for="destination_url">Destination URL</label>
+        <span class="input"><input id="destination_url" name="destination_url" type="text"></span></div>
+    <div><label for="short_url">Short URL</label>
+        <span class="input">http://clk.tc/<input id="short_url" name="short_url" type="text"></span></div>
     <div><input type="submit" value="Add Link"/></div>
     </form>
 {% endblock %}
