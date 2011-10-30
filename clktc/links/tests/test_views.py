@@ -1,4 +1,5 @@
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.test.client import Client
 from django.test import TestCase
 from clktc.links.models import Link
@@ -76,3 +77,18 @@ class VisitLinkTest(ViewBaseTest):
         self.site.delete()
         response = self.client.get('/')
         self.assertEqual(404, response.status_code)
+
+class DeleteLinkTest(ViewBaseTest):
+    def test_delete_link_returns_405_on_get(self):
+        link = given_a_link(self.site)
+        response = self.client.get('/l/delete/%s' %  link.pk)
+        self.assertEqual(405, response.status_code)
+
+    def test_returns_404_if_called_with_invalid_link_id(self):
+        response = self.client.post('/l/delete/%s' % 0)
+        self.assertEqual(404, response.status_code)
+
+    def test_deletes_link_when_called_with_post(self):
+        link = given_a_link(self.site)
+        response = self.client.post('/l/delete/%s' %  link.pk)
+        self.assertEqual(0, Link.objects.filter(short_url=link.short_url).count())
