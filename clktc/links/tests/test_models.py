@@ -13,14 +13,29 @@ class LinkTests(TestCase):
     def tearDown(self):
         self.site.delete()
 
-    @raises_regexp(IntegrityError, r'links_link.destination_url may not be NULL')
-    def test_destination_url_is_required(self):
-        link = Link(destination_url = None)
+    @raises_regexp(AssertionError, 'Destination URL cannot be empty')
+    def test_destination_url_cannot_be_null(self):
+        link = Link(destination_url = None, short_url="foobarbaz", site=self.site)
         link.save()
 
-    @raises_regexp(IntegrityError, r'links_link.short_url may not be NULL')
-    def test_short_url_is_required(self):
+    @raises_regexp(AssertionError, 'Destination URL cannot be empty')
+    def test_destination_url_cannot_be_blank(self):
+        link = Link(destination_url = "", short_url="foobarbaz", site=self.site)
+        link.save()
+
+    @raises_regexp(AssertionError, 'Short URL cannot be empty')
+    def test_short_url_cannot_be_null(self):
         link = Link(destination_url="http://example.com", short_url=None)
+        link.save()
+
+    @raises_regexp(AssertionError, 'Short URL cannot be empty')
+    def test_short_url_cannot_be_blank(self):
+        link = Link(destination_url="http://example.com", short_url="", site=self.site)
+        link.save()
+
+    @raises_regexp(IntegrityError, 'links_link.site_id may not be NULL')
+    def test_site_cannot_be_empty(self):
+        link = Link(destination_url = "foo", short_url="foobarbaz", site_id="")
         link.save()
 
     @raises_regexp(IntegrityError, r'columns short_url, site_id are not unique')
