@@ -16,8 +16,7 @@ def add_link(request):
     elif request.method == "POST":
         short_url = request.POST['short_url']
         destination_url = request.POST['destination_url']
-        link = Link(short_url=short_url, destination_url=destination_url)
-        link.site = get_current_site(request)
+        link = Link(short_url=short_url, destination_url=destination_url, site=request.site)
         link.save()
         return redirect(get_all_links)
 
@@ -34,5 +33,5 @@ def edit_link(request, link_id):
 
 
 def try_short_link(request, short_url):
-    link = get_object_or_404(Link, short_url=short_url, site=get_current_site(request))
+    link = get_object_or_404(Link, short_url=short_url, site=request.site)
     return redirect(link.destination_url)
