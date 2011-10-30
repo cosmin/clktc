@@ -5,7 +5,6 @@
     <div id="links">
         <ul>
         {% for link in links %}
-
             <li>
                 <a href="{% url edit_link link.pk %}">Edit</a>
                 |
@@ -13,6 +12,8 @@
                 =>
                 <a href="{{ link.destination_url }}">{{ link.destination_url }}</a>
             </li>
+        {% empty %}
+            You don't have any links. Why don't you <a href="{% url add_link %}">add</a> some?
         {% endfor %}
         </ul>
     </div>
