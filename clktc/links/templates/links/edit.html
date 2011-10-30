@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method="POST" action="/edit/{{ link.pk }}/">
+    <form method="POST" action="{% url edit_link link.pk %}">
     {% csrf_token %}
     <div><label for="destination_url">Destination URL</label>
         <span class="input"><input id="destination_url" name="destination_url" type="text" value={{ link.destination_url }}></span></div>

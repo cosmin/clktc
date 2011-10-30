@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-    <div><a href="/add/">Add New Link</a></div>
+    <div><a href="{% url add_link %}">Add New Link</a></div>
     <div id="links">
         <p>Your links</p>
         <ul>
         {% for link in links %}
 
             <li>
-                <a href="/edit/{{ link.pk }}/">Edit</a>
+                <a href="{% url edit_link link.pk %}">Edit</a>
                 |
                 <a href="http://clk.tc/{{ link.short_url }}">http://clk.tc/{{ link.short_url }}</a>
                 =>

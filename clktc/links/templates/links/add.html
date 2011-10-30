@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method="POST" action="/add/">
+    <form method="POST" action="{% url add_link %}">
     {% csrf_token %}
     <div><label for="destination_url">Destination URL</label>
         <span class="input"><input id="destination_url" name="destination_url" type="text"></span></div>

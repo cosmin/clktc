@@ -17,7 +17,7 @@ class ViewTests(TestCase):
 
     def test_get_all_links_returns_all_links_to_all_template(self):
         link = given_a_link()
-        response = self.client.get('/l/links/')
+        response = self.client.get('/')
         self.assertIn(link, response.context['links'])
         self.assertEqual(response.templates[0].name, "links/all.html")
 
@@ -32,7 +32,7 @@ class ViewTests(TestCase):
 
     def test_adding_a_link_redirects_to_all_links_page(self):
         response = self.client.post('/l/add/', {"destination_url" : EXAMPLE_URL, "short_url" : "example"})
-        self.assertRedirects(response, "/l/links/")
+        self.assertRedirects(response, "/")
 
     def test_edit_link_returns_correct_link_to_edit_template(self):
         link = given_a_link()
@@ -51,4 +51,4 @@ class ViewTests(TestCase):
     def test_save_on_edit_link_redirects_to_all_links(self):
         link = given_a_link()
         response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
-        self.assertRedirects(response, "/l/links/")
+        self.assertRedirects(response, "/")
