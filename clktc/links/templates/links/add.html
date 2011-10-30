@@ -2,11 +2,17 @@
 {% block title %}Add URL{% endblock %}
 {% block content %}
     <form method="POST" action="{% url add_link %}">
-    {% csrf_token %}
-    <div><label for="destination_url">Destination URL</label>
-        <span class="input"><input id="destination_url" name="destination_url" type="text"></span></div>
-    <div><label for="short_url">Short URL</label>
-        <span class="input">http://clk.tc/<input id="short_url" name="short_url" type="text"></span></div>
-    <div><input type="submit" value="Add Link"/></div>
+        {% csrf_token %}
+        <fieldset>
+            <div><label for="destination_url">Destination URL</label>
+                <span class="input"><input id="destination_url" name="destination_url" type="text"></span></div>
+            <div><label for="short_url">http://clk.tc/</label>
+                <span class="input"><input id="short_url" name="short_url" type="text"></span></div>
+        </fieldset>
+        <div class="actions">
+            <button type="submit" class="btn primary">Add Link</button>
+            &nbsp;
+            <button type="reset" class="btn">Cancel</button>
+        </div>
     </form>
 {% endblock %}
