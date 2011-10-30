@@ -26,3 +26,12 @@ class ViewTests(TestCase):
         self.assertEqual(link.destination_url, EXAMPLE_URL)
         self.assertRedirects(response, "/links/")
 
+    def test_edit_link_returns_correct_link_to_edit_template(self):
+        link = Link(destination_url="http://example.com", short_url="example", site=Site.objects.get(pk=1))
+        link.save()
+        response = self.client.get("/edit/%s" % link.pk)
+        self.assertEqual(response.templates[0].name, "links/edit.html")
+        self.assertEqual(response.context['link'], link)
+
+
+
