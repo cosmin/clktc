@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST" action="/edit/{{ link.pk }}/">
+    {% csrf_token %}
+    <div><label for="destination_url">Destination URL</label>
+        <span class="input"><input id="destination_url" name="destination_url" type="text" value={{ link.destination_url }}></span></div>
+    <div><label for="short_url">Short URL</label>
+        <span class="input">http://clk.tc/<input id="short_url" name="short_url" type="text" value={{ link.short_url }}></span></div>
+    <div><input type="submit" value="Save"/></div>
+    </form>
+{% endblock %}

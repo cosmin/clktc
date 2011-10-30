@@ -1,6 +1,6 @@
 # Create your views here.
 from django.contrib.sites.models import get_current_site
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from clktc.links.models import Link
 
@@ -20,3 +20,8 @@ def add_link(request):
         link.site = get_current_site(request)
         link.save()
         return redirect(get_all_links)
+
+
+def edit_link(request, link_id):
+    link = get_object_or_404(Link, pk=link_id)
+    return render_to_response("links/edit.html", RequestContext(request, dict(link=link)))
