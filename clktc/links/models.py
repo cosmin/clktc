@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Link(models.Model):
-    destination_url = models.URLField("Destination", blank=False)
+    destination_url = models.URLField("Destination", max_length=255, blank=False)
     short_url = models.TextField("Short URL", max_length=64, blank=False)
     site = models.ForeignKey(Site)
 
