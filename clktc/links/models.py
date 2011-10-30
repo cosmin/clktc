@@ -16,7 +16,6 @@ class Link(models.Model):
         return "http://%s/%s" % (self.site.domain, self.short_url)
 
     def save(self, *args, **kw):
-        assert self.short_url, "Short URL cannot be empty"
-        assert self.destination_url, "Destination URL cannot be empty"
+        self.full_clean()
         super(Link, self).save(*args, **kw)
 

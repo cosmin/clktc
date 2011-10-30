@@ -1,4 +1,6 @@
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
+from django.db.models.base import Model
 from django.db.utils import IntegrityError
 from django.test import TestCase
 from clktc.links.models import Link
@@ -13,32 +15,39 @@ class LinkTests(TestCase):
     def tearDown(self):
         self.site.delete()
 
-    @raises_regexp(AssertionError, 'Destination URL cannot be empty')
+    @raises_regexp(ValidationError, "destination_url.*This field cannot be null")
     def test_destination_url_cannot_be_null(self):
         link = Link(destination_url = None, short_url="foobarbaz", site=self.site)
         link.save()
 
-    @raises_regexp(AssertionError, 'Destination URL cannot be empty')
+    @raises_regexp(ValidationError, "destination_url.*This field cannot be blank")
     def test_destination_url_cannot_be_blank(self):
         link = Link(destination_url = "", short_url="foobarbaz", site=self.site)
         link.save()
 
-    @raises_regexp(AssertionError, 'Short URL cannot be empty')
+    @raises_regexp(ValidationError, "short_url.*This field cannot be null")
     def test_short_url_cannot_be_null(self):
         link = Link(destination_url="http://example.com", short_url=None)
         link.save()
 
-    @raises_regexp(AssertionError, 'Short URL cannot be empty')
+    @raises_regexp(ValidationError, "short_url.*This field cannot be blank")
     def test_short_url_cannot_be_blank(self):
         link = Link(destination_url="http://example.com", short_url="", site=self.site)
         link.save()
 
-    @raises_regexp(IntegrityError, 'links_link.site_id may not be NULL')
+    @raises_regexp(ValidationError, 'site.*This field cannot be blank')
     def test_site_cannot_be_empty(self):
-        link = Link(destination_url = "foo", short_url="foobarbaz", site_id="")
+        link = Link(destination_url = "http://example.com", short_url="foobarbaz", site_id="")
         link.save()
 
-    @raises_regexp(IntegrityError, r'columns short_url, site_id are not unique')
+    @raises_regexp(ValidationError, r'columns short_url, site_id are not unique')
+    def test_site_and_short_url_are_unique_together(self):
+        l1 = Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site)
+        l2 = Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site)
+        Model.save(l1)
+        Model.save(l2)
+
+    @raises_regexp(ValidationError, 'Link with this Short URL and Site already exists')
     def test_site_and_short_url_are_unique_together(self):
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()
