@@ -40,7 +40,6 @@ class ViewTests(TestCase):
         self.assertEqual(response.templates[0].name, "links/edit.html")
         self.assertEqual(response.context['link'], link)
 
-
     def test_save_on_edit_link_updates_link_with_new_details(self):
         link = given_a_link()
         self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
@@ -52,3 +51,8 @@ class ViewTests(TestCase):
         link = given_a_link()
         response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
         self.assertRedirects(response, "/")
+
+    def test_visit_short_url_redirects_to_destination_url(self):
+        link = given_a_link()
+        response = self.client.get("/" + link.short_url)
+        self.assertRedirects(response, link.destination_url)
