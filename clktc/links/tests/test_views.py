@@ -47,3 +47,8 @@ class ViewTests(TestCase):
         link = Link.objects.get(pk=link.pk)
         self.assertEqual(link.destination_url, "http://example.org")
         self.assertEqual(link.short_url, "example2")
+
+    def test_save_on_edit_link_redirects_to_all_links(self):
+        link = given_a_link()
+        response = self.client.post("/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
+        self.assertRedirects(response, "/links/")
