@@ -3,12 +3,7 @@
 {% block content %}
     <form method="POST" action="{% url add_link %}">
         {% csrf_token %}
-        <fieldset>
-            <div><label for="destination_url">Destination URL</label>
-                <span class="input"><input id="destination_url" name="destination_url" type="text"></span></div>
-            <div><label for="short_url">http://clk.tc/</label>
-                <span class="input"><input id="short_url" name="short_url" type="text"></span></div>
-        </fieldset>
+        {{ form }}
         <div class="actions">
             <button type="submit" class="btn primary">Add Link</button>
             &nbsp;
