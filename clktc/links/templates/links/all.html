@@ -9,7 +9,7 @@
             <li>
                 <a href="{% url edit_link link.pk %}">Edit</a>
                 |
-                <a href="http://clk.tc/{{ link.short_url }}">http://clk.tc/{{ link.short_url }}</a>
+                <a href="{{  link.url }}">{{ link.url }}</a>
                 =>
                 <a href="{{ link.destination_url }}">{{ link.destination_url }}</a>
             </li>
