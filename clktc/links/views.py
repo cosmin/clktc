@@ -31,3 +31,8 @@ def edit_link(request, link_id):
         link.short_url = request.POST['short_url']
         link.save()
         return redirect(get_all_links)
+
+
+def try_short_link(request, short_url):
+    link = get_object_or_404(Link, short_url=short_url, site=get_current_site(request))
+    return redirect(link.destination_url)
