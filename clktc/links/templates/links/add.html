@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}Add URL{% endblock %}
 {% block content %}
     <form method="POST" action="{% url add_link %}">
     {% csrf_token %}
