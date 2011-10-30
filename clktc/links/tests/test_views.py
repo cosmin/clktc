@@ -6,17 +6,19 @@ from clktc.links.models import Link
 EXAMPLE_URL = "http://example.com"
 
 
-def given_a_link():
-    link = Link(destination_url="http://example.com", short_url="example", site=Site.objects.get(pk=1))
+def given_a_link(site):
+    link = Link(destination_url="http://example.com", short_url="example", site=site)
     link.save()
     return link
 
 class ViewTests(TestCase):
     def setUp(self):
+        self.site = Site(domain="testserver", name="test")
+        self.site.save()
         self.client = Client()
 
     def test_get_all_links_returns_all_links_to_all_template(self):
-        link = given_a_link()
+        link = given_a_link(self.site)
         response = self.client.get('/')
         self.assertIn(link, response.context['links'])
         self.assertEqual(response.templates[0].name, "links/all.html")
@@ -35,24 +37,31 @@ class ViewTests(TestCase):
         self.assertRedirects(response, "/")
 
     def test_edit_link_returns_correct_link_to_edit_template(self):
-        link = given_a_link()
+        link = given_a_link(self.site)
         response = self.client.get("/l/edit/%s" % link.pk)
         self.assertEqual(response.templates[0].name, "links/edit.html")
         self.assertEqual(response.context['link'], link)
 
     def test_save_on_edit_link_updates_link_with_new_details(self):
-        link = given_a_link()
+        link = given_a_link(self.site)
         self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
         link = Link.objects.get(pk=link.pk)
         self.assertEqual(link.destination_url, "http://example.org")
         self.assertEqual(link.short_url, "example2")
 
     def test_save_on_edit_link_redirects_to_all_links(self):
-        link = given_a_link()
+        link = given_a_link(self.site)
         response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
         self.assertRedirects(response, "/")
 
     def test_visit_short_url_redirects_to_destination_url(self):
-        link = given_a_link()
+        link = given_a_link(self.site)
         response = self.client.get("/" + link.short_url)
         self.assertRedirects(response, link.destination_url)
+
+    def test_visiting_url_without_proper_site_results_in_404(self):
+        response = self.client.get('/')
+        self.assertEqual(200, response.status_code)
+        self.site.delete()
+        response = self.client.get('/')
+        self.assertEqual(404, response.status_code)
