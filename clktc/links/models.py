@@ -10,3 +10,7 @@ class Link(models.Model):
 
     class Meta:
         unique_together = ["short_url", "site"]
+
+    @property
+    def url(self):
+        return "http://%s/%s" % (self.site.domain, self.short_url)
