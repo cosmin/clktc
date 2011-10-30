@@ -1,0 +1,14 @@
+<div class="clearfix{% if errors %} error{% endif %}">
+    {{ label }}
+    <div class="input">
+        {{ bf }}
+        {% if errors %}
+        <span class="help-inline">
+            {% for error in errors %}
+            {{ error }}
+            {% endfor %}
+        </span>
+        {% endif %}
+        <span class="help-block">{{ help_text }}</span>
+    </div>
+</div> <!-- /clearfix -->
