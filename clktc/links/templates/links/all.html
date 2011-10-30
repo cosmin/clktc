@@ -1,9 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
     <div><a href="/add/">Add New Link</a></div>
-    <ul>
-    {% for link in links %}
-        <li><a href="{{ link.destination_url }}">{{ link.short_url }}</a></li>
-    {% endfor %}
-    </ul>
+    <div id="links">
+        <p>Your links</p>
+        <ul>
+        {% for link in links %}
+
+            <li>
+                <a href="/edit/{{ link.pk }}/">Edit</a>
+                |
+                <a href="http://clk.tc/{{ link.short_url }}">http://clk.tc/{{ link.short_url }}</a>
+                =>
+                <a href="{{ link.destination_url }}">{{ link.destination_url }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
     {% endblock %}
