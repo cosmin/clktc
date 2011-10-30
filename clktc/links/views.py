@@ -24,4 +24,8 @@ def add_link(request):
 
 def edit_link(request, link_id):
     link = get_object_or_404(Link, pk=link_id)
+    if request.method == "POST":
+        link.destination_url = request.POST['destination_url']
+        link.short_url = request.POST['short_url']
+        link.save()
     return render_to_response("links/edit.html", RequestContext(request, dict(link=link)))
