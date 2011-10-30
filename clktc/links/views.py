@@ -2,7 +2,7 @@
 from django.contrib.sites.models import get_current_site
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
-from clktc.links.forms import LinkForm
+from clktc.links.forms import AddLinkForm, EditLinkForm
 from clktc.links.models import Link
 
 def get_all_links(request):
@@ -13,14 +13,14 @@ def get_all_links(request):
 
 def add_link(request):
     if request.method == "POST":
-        form = LinkForm(request.POST)
+        form = AddLinkForm(request.POST)
         if form.is_valid():
             link = form.save(commit=False)
             link.site = request.site
             link.save()
             return redirect(get_all_links)
     else:
-        form = LinkForm()
+        form = AddLinkForm()
     return render_to_response("links/add.html", RequestContext(request, {'form': form}))
 
 def edit_link(request, link_id):
