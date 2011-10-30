@@ -1,22 +1,33 @@
 {% extends "base.html" %}
 {% block title %}{% endblock %}
 {% block subtitle %}Edit URL for {{ link.url }}{% endblock %}
+
 {% block content %}
+    <div id="delete-modal" class="modal hide fade">
+          <div class="modal-header">
+            <a href="#" class="close">×</a>
+            <h3>Are you sure?</h3>
+          </div>
+          <div class="modal-body">
+            <p>Deleting the link will take effect immediately. This operation cannot be undone.</p>
+          </div>
+          <div class="modal-footer">
+              <form action="{% url delete_link link.pk %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn danger">Yes, I'm sure.</button>
+                  <button type="button" class="btn secondary" onclick="$('#delete-modal').modal('hide')">Never mind</button>
+              </form>
+          </div>
+    </div>
     <form method="POST" action="{% url edit_link link.pk %}">
         {% csrf_token %}
-{#        <fieldset>#}
-{#            <div class="clearfix"><label for="destination_url">Destination URL</label>#}
-{#                <span class="input"><input id="destination_url" name="destination_url" type="text"#}
-{#                                           value={{ link.destination_url }}></span></div>#}
-{#            <div class="clearfix"><label for="destination_url">Shortened URL</label>#}
-{#                <span class="input"><input id="short_url" name="short_url" type="text" disabled="true"#}
-{#                                           value={{ link.url }}></span></div>#}
-{#        </fieldset>#}
         {{ form }}
         <div class="actions">
             <button type="submit" class="btn primary">Save</button>
             &nbsp;
             <button type="reset" class="btn">Cancel</button>
+            &nbsp;
+            <button data-controls-modal="delete-modal" data-backdrop="true" data-keyboard="true" type="button" class="btn danger">Delete</button>
         </div>
     </form>
 {% endblock %}

@@ -1,5 +1,6 @@
 # Create your views here.
 from django.contrib.sites.models import get_current_site
+from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from clktc.links.forms import AddLinkForm, EditLinkForm
@@ -37,6 +38,15 @@ def edit_link(request, link_id):
     else:
         form = form_cls(instance=link)
     return render_to_response("links/edit.html", RequestContext(request, dict(link=link, form=form)))
+
+@require_valid_site
+def delete_link(request, link_id):
+    if request.method == "POST":
+        link = get_object_or_404(Link, pk=link_id)
+        link.delete()
+        return redirect(get_all_links)
+    else:
+        return HttpResponseNotAllowed(permitted_methods=["POST"])
 
 @require_valid_site
 def try_short_link(request, short_url):
