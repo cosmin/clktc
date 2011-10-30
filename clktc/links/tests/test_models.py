@@ -27,3 +27,8 @@ class LinkTests(TestCase):
     def test_site_and_short_url_are_unique_together(self):
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()
+
+    def test_returns_correct_full_url(self):
+        link = Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site)
+        link.save()
+        self.assertEqual(link.url, "http://%s/%s" % (self.site.domain, link.short_url))
