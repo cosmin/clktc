@@ -13,7 +13,7 @@ def get_all_links(request):
 def add_link(request):
     if request.method == "GET":
         return render_to_response("links/add.html", RequestContext(request))
-    else:
+    elif request.method == "POST":
         short_url = request.POST['short_url']
         destination_url = request.POST['destination_url']
         link = Link(short_url=short_url, destination_url=destination_url)
