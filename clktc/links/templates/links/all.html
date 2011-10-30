@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<ul>
-{% for link in links %}
-<li><a href="{{ link.destination_url }}">{{ link.short_url }}</a></li>
-{% endfor %}
-</ul>
-{% endblock %}
+    <div><a href="/add/">Add New Link</a></div>
+    <ul>
+    {% for link in links %}
+        <li><a href="{{ link.destination_url }}">{{ link.short_url }}</a></li>
+    {% endfor %}
+    </ul>
+    {% endblock %}
