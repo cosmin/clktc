@@ -24,7 +24,7 @@
             <a class="brand" href="/">clktc</a>
             <ul class="nav">
                 <li><a href="/">Home</a></li>
-                <li><a href="{% url add_link %}">Add</a></li>
+
             </ul>
             {% if user.is_anonymous %}
             <form action="{% url login %}" method="POST" class="pull-right">

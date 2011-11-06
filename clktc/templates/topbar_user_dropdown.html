@@ -2,8 +2,7 @@
     <li class="dropdown" data-dropdown="dropdown">
         <a href="#" class="dropdown-toggle">{{ user.username }}</a>
         <ul class="dropdown-menu">
-            <li><a href="#">Secondary link</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="{% url add_link %}">Add Link</a></li>
             <li class="divider"></li>
             <li><a href="{% url logout %}">Logout</a></li>
         </ul>
