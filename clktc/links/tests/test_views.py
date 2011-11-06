@@ -1,5 +1,5 @@
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
 from django.test.client import Client
 from django.test import TestCase
 from clktc.links.models import Link
@@ -19,6 +19,10 @@ class ViewBaseTest(TestCase):
         self.site = Site(domain="testserver", name="test")
         self.site.save()
         self.client = Client()
+        self.user = User(username='test', is_active=True)
+        self.user.set_password("test")
+        self.user.save()
+        self.client.login(username='test', password='test')
 
 class AllLinksTest(ViewBaseTest):
     def test_get_all_links_returns_all_links_to_all_template(self):

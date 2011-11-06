@@ -1,4 +1,5 @@
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 from django.http import  HttpResponseNotAllowed
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
@@ -7,12 +8,14 @@ from clktc.links.decorators import require_valid_site
 from clktc.links.models import Link
 
 @require_valid_site
+@login_required
 def get_all_links(request):
     return render_to_response("links/all.html", RequestContext(request, dict(
         links = Link.objects.all(),
     )))
 
 @require_valid_site
+@login_required
 def add_link(request):
     if request.method == "POST":
         form = AddLinkForm(request.POST)
@@ -26,6 +29,7 @@ def add_link(request):
     return render_to_response("links/add.html", RequestContext(request, {'form': form}))
 
 @require_valid_site
+@login_required
 def edit_link(request, link_id):
     link = get_object_or_404(Link, pk=link_id)
     form_cls = EditLinkForm
@@ -39,6 +43,7 @@ def edit_link(request, link_id):
     return render_to_response("links/edit.html", RequestContext(request, dict(link=link, form=form)))
 
 @require_valid_site
+@login_required
 def delete_link(request, link_id):
     if request.method == "POST":
         link = get_object_or_404(Link, pk=link_id)
