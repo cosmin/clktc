@@ -15,18 +15,29 @@ def given_a_link(site):
     return link
 
 class ViewBaseTest(TestCase):
-    def setUp(self):
-        self.site = Site(domain="testserver", name="test")
-        self.site.save()
-        self.client = Client()
+    def create_user(self):
         self.user = User(username='test', is_active=True)
         self.user.set_password("test")
         self.user.save()
+
+    def authenticate(self):
         self.client.login(username='test', password='test')
+
+    def create_site(self):
+        self.site = Site(domain="testserver", name="test")
+        self.site.save()
+
+    def setUp(self):
+        self.client = Client()
+        self.create_site()
+        self.create_user()
+        self.authenticate()
 
 class AllLinksTest(ViewBaseTest):
     def test_get_all_links_returns_all_links_to_all_template(self):
         link = given_a_link(self.site)
+        link.user = self.user
+        link.save()
         response = self.client.get(ALL_LINKS)
         self.assertIn(link, response.context['links'])
         self.assertEqual(response.templates[0].name, "links/all.html")

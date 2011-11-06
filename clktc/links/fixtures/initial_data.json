@@ -1,1 +1,28 @@
-[{"pk": 1, "model": "sites.site", "fields": {"domain": "localhost:8000", "name": "localhost"}}]
+[
+    {
+        "pk": 1,
+        "model": "sites.site",
+        "fields": {
+            "domain": "localhost:8000",
+            "name": "localhost"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "system",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2011-11-06 18:08:51",
+            "groups": [],
+            "user_permissions": [],
+            "password": "!",
+            "email": "admin@admin.com",
+            "date_joined": "2011-11-06 18:08:17"
+        }
+    }
+]

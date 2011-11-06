@@ -11,7 +11,7 @@ from clktc.links.models import Link
 @login_required
 def get_all_links(request):
     return render_to_response("links/all.html", RequestContext(request, dict(
-        links = Link.objects.all(),
+        links = Link.objects.filter(user=request.user),
     )))
 
 @require_valid_site
@@ -22,6 +22,7 @@ def add_link(request):
         if form.is_valid():
             link = form.save(commit=False)
             link.site = request.site
+            link.user = request.user
             link.save()
             return redirect(get_all_links)
     else:
@@ -36,7 +37,7 @@ def edit_link(request, link_id):
     if request.method == "POST":
         form = form_cls(request.POST, instance=link)
         if form.is_valid():
-            link = form.save()
+            form.save()
             return redirect(get_all_links)
     else:
         form = form_cls(instance=link)
