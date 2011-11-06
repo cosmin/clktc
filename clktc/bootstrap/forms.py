@@ -12,9 +12,7 @@ class NoSuchFormField(Exception):
 
 
 def error_list(errors):
-    return '<ul class="errors"><li>' +\
-           '</li><li>'.join(errors) +\
-           '</li></ul>'
+    return '<div class="alert-message error">' +  '<br/>'.join(errors) + '</div>'
 
 
 class BootstrapBaseForm(object):
