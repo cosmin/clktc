@@ -1,6 +1,5 @@
 # Create your views here.
-from django.contrib.sites.models import get_current_site
-from django.http import Http404, HttpResponseNotAllowed
+from django.http import  HttpResponseNotAllowed
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from clktc.links.forms import AddLinkForm, EditLinkForm
@@ -52,3 +51,7 @@ def delete_link(request, link_id):
 def try_short_link(request, short_url):
     link = get_object_or_404(Link, short_url=short_url, site=request.site)
     return redirect(link.destination_url)
+
+
+def homepage(request):
+    return render_to_response("links/homepage.html", RequestContext(request))
