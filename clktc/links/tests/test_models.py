@@ -47,7 +47,7 @@ class LinkTests(TestCase):
         Model.save(l1)
         Model.save(l2)
 
-    @raises_regexp(ValidationError, 'Link with this Short URL and Site already exists')
+    @raises_regexp(ValidationError, 'Link with this short URL already exists for this site. Please try another one.')
     def test_site_and_short_url_are_unique_together(self):
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()
         Link(destination_url = "http://example.com", short_url = "foobarbaz", site = self.site).save()

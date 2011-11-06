@@ -1,5 +1,6 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.http import  HttpResponseNotAllowed, HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
@@ -23,8 +24,11 @@ def add_link(request):
             link = form.save(commit=False)
             link.site = request.site
             link.user = request.user
-            link.save()
-            return redirect(get_all_links)
+            try:
+                link.save()
+                return redirect(get_all_links)
+            except ValidationError as ve:
+                form._update_errors(ve.message_dict)
     else:
         form = AddLinkForm()
     return render_to_response("links/add.html", RequestContext(request, {'form': form}))

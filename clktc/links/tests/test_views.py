@@ -64,6 +64,12 @@ class AddLinkTest(ViewBaseTest):
         response = self.client.post('/l/add/', {"destination_url" : EXAMPLE_URL, "short_url" : ""})
         self.assertFormError(response, 'form', 'short_url', u'This field is required.')
 
+    def test_adding_a_link_with_duplicate_short_url(self):
+        link = given_a_link(self.site, user=self.user)
+        response = self.client.post('/l/add/', {"destination_url" : "http://foo.bar/baz", "short_url": link.short_url})
+        self.assertFormError(response, 'form', 'short_url', u'Link with this short URL already exists for this site. Please try another one.')
+
+
 class EditLinkTest(ViewBaseTest):
     def test_edit_link_returns_404_if_current_owner_does_not_match(self):
         link = given_a_link(self.site)
@@ -84,7 +90,7 @@ class EditLinkTest(ViewBaseTest):
     
     def test_save_on_edit_link_redirects_to_all_links(self):
         link = given_a_link(self.site, user=self.user)
-        response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org", "short_url" : "example2"})
+        response = self.client.post("/l/edit/%s" % link.pk, {"destination_url" : "http://example.org"})
         self.assertRedirects(response, ALL_LINKS)
 
 class VisitLinkTest(ViewBaseTest):
