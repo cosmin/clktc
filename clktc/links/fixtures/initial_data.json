@@ -8,6 +8,14 @@
         }
     },
     {
+        "pk": 2,
+        "model": "sites.site",
+        "fields": {
+            "domain": "clk.tc",
+            "name": "clktc"
+        }
+    },
+    {
         "pk": 1,
         "model": "auth.user",
         "fields": {

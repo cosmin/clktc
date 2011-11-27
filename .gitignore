@@ -1,6 +1,12 @@
 local_settings.py
 dev.db
 
+# virtual env
+/bin
+/lib
+/include
+/share
+
 # generic stuff
 *.pyc
 *~
