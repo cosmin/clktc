@@ -11,7 +11,7 @@
         "pk": 2,
         "model": "sites.site",
         "fields": {
-            "domain": "clk.tc",
+            "domain": "clktc.herokuapp.com",
             "name": "clktc"
         }
     },
