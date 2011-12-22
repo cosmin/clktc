@@ -6,7 +6,7 @@ from clktc.links.models import Link
 class AddLinkForm(BootstrapModelForm):
     class Meta:
         model = Link
-        fields = ('short_url', 'destination_url')
+        fields = ('short_url', 'destination_url', 'site')
         widgets = {
             'destination_url': forms.TextInput,
             'short_url': forms.TextInput,

@@ -22,7 +22,6 @@ def add_link(request):
         form = AddLinkForm(request.POST)
         if form.is_valid():
             link = form.save(commit=False)
-            link.site = request.site
             link.user = request.user
             try:
                 link.save()
