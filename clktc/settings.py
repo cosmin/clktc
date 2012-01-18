@@ -45,12 +45,16 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = 'https://s3.amazonaws.com/clktc/'
 ADMIN_MEDIA_PREFIX = 'https://s3.amazonaws.com/clktc/admin/'
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'clktc'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -103,11 +107,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
 
+    'storages',
     'south',
 
     'bootstrap',
     'links',
-)   
+)
 
 # See http://docs.djangoproject.com/en/dev/topics/logging
 LOGGING = {
