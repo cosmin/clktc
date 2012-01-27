@@ -3,6 +3,7 @@
         <a href="#" class="dropdown-toggle">{{ user.username }}</a>
         <ul class="dropdown-menu">
             <li><a href="{% url add_link %}">Add Link</a></li>
+            <li><a href="{% url all_links %}">My Links</a></li>
             <li class="divider"></li>
             <li><a href="{% url logout %}">Logout</a></li>
         </ul>
