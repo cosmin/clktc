@@ -6,6 +6,8 @@ dev.db
 /lib
 /include
 /share
+.Python
+*.egg
 
 # generic stuff
 *.pyc
