@@ -7,47 +7,46 @@
     </title>
 
     {% block styles %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-1.4.0.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-2.0.4.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/site.css">
     {% endblock %}
 
     {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.4.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-modal-1.4.0.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-dropdown-1.4.0.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-modal-2.0.4.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-dropdown-2.0.4.js"></script>
     {% endblock %}
 </head>
 <body>
-<div class="topbar">
-    <div class="fill">
-        <div class="container">
-            <a class="brand" href="/">clktc</a>
-            <ul class="nav">
-                <li><a href="/">Home</a></li>
-
-            </ul>
-            {% if user.is_anonymous %}
-            <form action="{% url login %}" method="POST" class="pull-right">
-                {% csrf_token %}
-                <input class="input-small" type="text" name="username" placeholder="Username">
-                <input class="input-small" type="password" name="password" placeholder="Password">
-                <button class="btn" type="submit">Sign in</button>
-            </form>
-            {% else %}
-                {% include "topbar_user_dropdown.html" %}
-            {% endif %}
-        </div>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">clktc</a>
+      <ul class="nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+      {% if user.is_anonymous %}
+      <form action="{% url login %}" method="POST" class="navbar-form pull-right">
+        {% csrf_token %}
+        <input class="span2" type="text" name="username" placeholder="Username">
+        <input class="span2" type="password" name="password" placeholder="Password">
+        <button class="btn btn-small" type="submit">Sign in</button>
+      </form>
+      {% else %}
+      {% include "topbar_user_dropdown.html" %}
+      {% endif %}
     </div>
+  </div>
 </div>
 <div class="container">
     <div class="content">
-        <div class="page-header">
-            <h2>{% block title %} Page Name {% endblock %} <small>{% block subtitle %}Supporting text or tagline{% endblock %}</small></h2>
+      <div class="row page-header">
+        <div class="span12">
+          <h2>{% block title %} Page Name {% endblock %} <small>{% block subtitle %}Supporting text or tagline{% endblock %}</small></h2>
         </div>
-        <div class="row">
-            {% block content %}
-            {% endblock %}
-        </div>
+      </div>
+      {% block content %}
+      {% endblock %}
     </div>
 </div>
 </body>

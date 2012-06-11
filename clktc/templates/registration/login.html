@@ -3,22 +3,30 @@
 {% block subtitle %}{% endblock %}
 
 {% block content %}
-
+  <div id="login">
   {% if form.errors %}
-    <div class="alert-message error">Your username and password didn't match. Please try again.</div>
+    <div class="alert alert-error">Your username and password didn't match. Please try again.</div>
   {% endif %}
 
-  <form action="{% url login %}" method="POST">
+  <form class="form-horizontal" action="{% url login %}" method="POST">
+    <fieldset>
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
-    <div class="clearfix">
-      <label for="username">Username</label>
-      <div class="input"><input type="text" name="username" placeholder="Username"></div>
+    <div class="control-group">
+      <label class="control-label" for="username">Username</label>
+      <div class="controls">
+        <input type="text" name="username" placeholder="Username">
+      </div>
     </div>
-    <div class="clearfix">
-      <label for="password">Password</label>
-      <div class="input"> <input  type="password" name="password" placeholder="Password"></div>
+    <div class="control-group">
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input  type="password" name="password" placeholder="Password">
+      </div>
     </div>
-    <div class="actions"><button class="btn primary" type="submit">Sign in</button></div>
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">Sign in</button>
+    </div>
   </form>
+  </div>
 {% endblock %}
