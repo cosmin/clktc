@@ -1,11 +1,11 @@
 import os
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DEFAULT_FROM_EMAIL='notifications@clk.tc'
 
 ADMINS = (
