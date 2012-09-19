@@ -12,7 +12,7 @@ class NoSuchFormField(Exception):
 
 
 def error_list(errors):
-    return '<div class="alert-message error">' +  '<br/>'.join(errors) + '</div>'
+    return '<div class="alert alert-error">' +  '<br/>'.join(errors) + '</div>'
 
 
 class BootstrapBaseForm(object):
@@ -150,4 +150,3 @@ class Fieldset(object):
 
 class BootstrapModelForm(BootstrapBaseForm, ModelForm):
     pass
-
