@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
-{% block subtitle %}Edit URL for {{ link.url }}{% endblock %}
+{% block title %}Edit{% endblock %}
+{% block subtitle %}destination for {{ link.url }}{% endblock %}
 
 {% block content %}
     <div id="delete-modal" class="modal hide fade">
@@ -19,15 +19,21 @@
               </form>
           </div>
     </div>
-    <form method="POST" action="{% url edit_link link.pk %}">
-        {% csrf_token %}
-        {{ form }}
-        <div class="actions">
-            <button type="submit" class="btn primary">Save</button>
+    <div id="edit">
+        <form class="form-horizontal" method="POST" action="{% url edit_link link.pk %}">
+          <fieldset>
+          {% csrf_token %}
+          <div class="control-group">
+          {{ form }}
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
             &nbsp;
             <button type="reset" class="btn">Cancel</button>
             &nbsp;
             <button data-controls-modal="delete-modal" data-backdrop="true" data-keyboard="true" type="button" class="btn danger">Delete</button>
-        </div>
-    </form>
+          </div>
+          </fieldset>
+        </form>
+    </div>
 {% endblock %}
